@@ -33,12 +33,12 @@ def commit_and_push(updated: int) -> None:
     """
     _run(["git", "add", "knowledge/", "signals/"])
 
-    status = _run(["git", "status", "--porcelain"])
+    status = _run(["git", "diff", "--cached", "--name-only"])
     if not status:
         logger.info("Nothing to commit.")
         return
 
     message = f"sync: {date.today()} — {updated} entr{'y' if updated == 1 else 'ies'} updated"
     _run(["git", "commit", "-m", message])
-    _run(["git", "push"])
+    _run(["git", "push", "origin", "main"])
     logger.info(f"Pushed: {message}")
