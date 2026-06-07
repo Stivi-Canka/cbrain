@@ -1,8 +1,10 @@
-"""Fetches all entries from the cbrain Notion database and parses them."""
+"""Fetches and parses entries from the cbrain Notion database."""
 
 import logging
 from notion_client import Client
 from config import settings
+
+logger = logging.getLogger(__name__)
 
 NOTION_CLIENT = None
 
@@ -13,8 +15,6 @@ def get_client() -> Client:
     if NOTION_CLIENT is None:
         NOTION_CLIENT = Client(auth=settings.notion_api_key)
     return NOTION_CLIENT
-
-logger = logging.getLogger(__name__)
 
 
 def fetch_entries() -> list[dict]:

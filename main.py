@@ -1,8 +1,8 @@
 """cbrain orchestrator — syncs Notion entries to markdown files."""
 
-import json
 import logging
 from scripts.cbrain_sync import fetch_entries, parse_entry, fetch_body
+from scripts.writer import write_entry
 
 logger = logging.getLogger(__name__)
 
@@ -14,8 +14,8 @@ def main() -> None:
     pages = fetch_entries()
     for page in pages:
         entry = parse_entry(page)
-        entry["body"] = fetch_body(entry["id"])
-        print(json.dumps(entry, indent=2))
+        body = fetch_body(entry["id"])
+        write_entry(entry, body)
 
     logger.info("cbrain run complete.")
 
